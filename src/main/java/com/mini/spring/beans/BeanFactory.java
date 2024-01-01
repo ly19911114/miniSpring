@@ -24,5 +24,16 @@ public interface BeanFactory {
      *
      * @param beanDefinition
      */
-    void registerBeanDefinition(BeanDefinition beanDefinition);
+//    void registerBeanDefinition(BeanDefinition beanDefinition);
+
+//    void registerBean(String name, Object obj);
+
+
+    boolean containsBean(String name);
+
+    boolean isSingleton(String name);
+
+    boolean isPrototype(String name);
+
+    Class getType(String name);
 }

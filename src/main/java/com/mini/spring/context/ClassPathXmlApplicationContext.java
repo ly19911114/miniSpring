@@ -9,13 +9,13 @@ import com.mini.spring.core.Resource;
  * @Author: 刘洋
  * @Date: 2023/12/24 00:53
  */
-public class ClassPathXmlApplicationContext {
-    BeanFactory beanFactory;
+public class ClassPathXmlApplicationContext implements BeanFactory,ApplicationEventPublisher{
+    SimpleBeanFactory beanFactory;
 
     //context负责整合容器的启动过程，读取外部配置，解析Bean,创建BeanFactory
     public ClassPathXmlApplicationContext(String fileName) {
         Resource resource = new ClassPathXmlResource(fileName);
-        BeanFactory bf = new SimpleBeanFactory();
+        SimpleBeanFactory bf = new SimpleBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(bf);
         reader.loadBeanDefinitions(resource);
         this.beanFactory=bf;
@@ -26,8 +26,38 @@ public class ClassPathXmlApplicationContext {
         return beanFactory.getBean(beanName);
     }
 
-    public void registerBeanDefinition(BeanDefinition beanDefinition) {
-        beanFactory.registerBeanDefinition(beanDefinition);
+
+
+
+
+
+
+    public boolean containsBean(String name){
+        return this.beanFactory.containsBean(name);
     }
 
+    @Override
+    public boolean isSingleton(String name) {
+        return false;
+    }
+
+    @Override
+    public boolean isPrototype(String name) {
+        return false;
+    }
+
+    @Override
+    public Class getType(String name) {
+        return null;
+    }
+
+    public void registerBean(String beanName, Object obj) {
+        beanFactory.registerBean(beanName,obj);
+    }
+
+
+    @Override
+    public void publishEvent(ApplicationEvent event) {
+
+    }
 }
